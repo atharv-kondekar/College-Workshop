@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Checker</title>
+    <!--
+        1. Prime Number Checker
+     Concepts: Loops (for), Conditional statements, Modulus operator
+    Description: This program checks whether a given number is a prime number or not. A 
+    prime number is a number that has only two factors: 1 and itself. The program uses a for
+    loop to check divisibility (using the modulus operator %) for all numbers up to the square 
+    root of the given number. If no divisor is found, the number is prime.
+    -->
+    <body>
+        <h1>The Prime Number Checker</h1>
+        <div>
+            <input name="num" placeholder="Enter the Numebr : " id="num">
+            <button onclick="prime()">Check Prime</button>
+            <p id="result"></p>
+        </div>
+    </body>
+    <script>
+        function isprime(num)
+        {
+            if(num<=1)
+                return false;
+            
+            for(let i=2;i<Math.sqrt(num);i++)
+            {
+                if(num%i==0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        function prime()
+        {
+            var num=Number(document.getElementById("num").value);
+            var result=document.getElementById("result")
+
+            if(num<=0 || isNaN(num))
+            {
+                result.innerHTML="PLease enter the Valid Number";
+                return ;
+            }
+
+            if(isprime(num))
+            {
+                result.innerHTML="The given "+num+" is the Prime Number"
+            }
+
+            else
+            {
+                result.innerHTML="The Given "+num+" is not prime Number"
+            }
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

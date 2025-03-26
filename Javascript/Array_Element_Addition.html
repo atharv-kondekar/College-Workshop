@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Array Sum</title>
+    <input name="str" placeholder="Enter the numbers seprated by commas  : " id="str">
+    <button onclick="sum()">Let's Add</button>
+    <p id="result"></p>
+    <!--
+    3. Array Sum
+     Concepts: Arrays, Loops (for/while), Array methods (reduce)
+    Description: This program calculates the sum of all the elements in an array. It can be 
+    done using a loop (e.g., for or while) to iterate through the array and add each element..
+    -->
+
+    <body>
+        <h1> Addition </h1>
+        
+    </body>    
+    <script>
+        
+        function sum()
+        {
+            result=document.getElementById("result")
+            if(n<0){
+                result.innerHTML="PLease Enter the Valid Size of the Array "
+                return ;
+            }
+
+            var sum=0;
+            var array=document.getElementById("str").value;
+            var numArr=array.split(",").map(Number)
+
+
+            for(let i =0;i<numArr.lenght;i++)
+            {
+                sum=sum+numArr[i];
+            }
+
+            result.innerHTML="The Sum of the Array Elemnts is : "+sum;
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

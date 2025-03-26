@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Workshop</title>
+   <script>
+       // comnets in javacript :  singleline = //  & multiline=/* */
+        // Javascript Code alwyas Write inside the script -//
+       // alert("Hello");
+        // This will display a POP-UP alert box with the message "Hello, Atharv!"//
+
+        // Variable Declaration 1) with var 2) let
+        var num1=5,num2=2;
+        let ans;
+        //window.var
+        ans=num1+num2;
+        // alert("The Sum of the Num1 and Num2 : "+ans);
+        // alert("\n The Division of num1 and num2 : "+num1/num2)
+        // var declares globally :- EveryWhere We can use it 
+        // let not declares globally :- only for the block ,i.e tmporary
+        console.log(ans);
+
+        // 
+        if(num1>num2)
+        {
+            console.log(num1+" greater than "+num2)
+        }
+
+        else if (num2==num1){
+            consol.log(num1+" Both are equal "+num2)
+
+        }
+
+        else{
+            console.log("Both Same")
+        }
+
+
+        // Array 
+        var Array=["Atharv","Uday","Om",45];
+        console.log(Array)
+
+
+        // For  loop
+
+        for(let i=0;i<10;i++)
+        {
+            console.log(i)
+        }
+
+        //While Loop
+
+        console.log("\n Printing Elements in the While loop : ")
+        while(num1>0)
+        {
+            console.log(num1);
+            num1--;
+        }
+    
+    </script>
+
+     <body>
+        <h1> Student List </h1>
+        <div> 
+            
+            <input name="name" placeholder="Enter Name" id="name"> 
+            <input name="age" placeholder="Enter age " id="age">
+            <button onclick="addelement()">Add</button> 
+            
+            
+        </div>
+        <table id="Studentid",Border=1>
+            <!--<tr>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>-->
+        </table>
+    </body>
+    <script>
+        // Adding the List in to the Javascript 
+       // var studentlist=[{name:"Rahul",age:24},{name:"Akash",age:26},{name:"Suyog",age:23}]
+       /*
+         var tble=document.getElementById("Studentid")
+            var rows="<tr><th>Name</th><th>Age</th></tr>";
+
+            studentlist.forEach(rowobj=>{
+                var row="<tr><td>"+rowobj.name+"</td><td>"+rowobj.age+"</td></tr>";
+                console.log(row)
+                rows=rows+row;
+            })
+            console.log(rows)
+            tble.innerHTML=rows;
+        */
+       var studentlist=[]
+        
+
+        function addelement()
+        {
+            var name=document.getElementById("name").value;
+            var age=document.getElementById("age").value;
+            console.log(name,age);
+            //constructing the object
+            var newstudent={
+                name:name,
+                age:age
+            }
+            console.log(newstudent);
+            studentlist.push(newstudent)
+            console.log(studentlist)
+
+            var tble=document.getElementById("Studentid")
+            var rows="<tr><th>Name</th><th>Age</th></tr>";
+
+            studentlist.forEach(rowobj=>{
+                var row="<tr><td>"+rowobj.name+"</td><td>"+rowobj.age+"</td></tr>";
+                console.log(row)
+                rows=rows+row;
+            })
+            console.log(rows)
+            tble.innerHTML=rows;
+        }
+
+        function addstudent_byUpdate()
+        {
+            //giving error
+            // updating the dom
+            var name=document.getElementById("name").value;
+            var age=document.getElementById("age").value;
+            console.log(name,age);
+            //constructing the object
+            var newstudent={
+                name:name,
+                age:age
+            }
+            console.log(newstudent);
+            studentlist.push(newstudent)
+            console.log(studentlist)
+
+            var tble=document.getElementById("Studentid")
+            var row="<tr><td>"+name+"</td><td>"+age+"</td></tr>";
+            console.log(row)
+            tble.innerHTML=row;
+        }
+    </script>
+    <!-- You Can Add Multiple Script Tags in the Javascript-->
+
+    <script>
+        // JSon
+        /*
+        var student=
+        {
+            //key:value
+            name:"Atharv",
+            age:31,
+
+            // Nested JSON 
+             marks:{
+                maths:99,
+                physics:91,
+                chemistry:95
+                
+            },
+            // You can take Arrays also as the key 
+            branches:[
+                {name:"CSE",College:"Dkte"},
+                {name:"ENTC",College:"SIT",cast:"OPEN"}
+            ]
+        }
+        console.log(student)
+        console.log("\n",student.name)
+        console.log("\n",student.age)
+        console.log("\n",student.branches)
+
+        console.log("\n Accessing the JSON objest")
+        for(let i=0;i<student.branches.length;i++)
+        {
+            console.log(student.branches[i],student.branches[i].name,student.branches[i].College);
+        }
+        */
+
+        // Without Indexing 
+        /* student.branches.forEach(element=>{
+            console.log(element);
+        })*/
+
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>
