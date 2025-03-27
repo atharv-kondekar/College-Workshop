@@ -1,0 +1,365 @@
+<html>
+    <head>
+        <title>Javascript Workshop</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div style="background-color: blueviolet;text-align: center;color: #fff;height: 12vh;">
+            <h3 style="margin: 0px;">Quiz</h3>
+        </div>
+        <div style="background-color: burlywood;height: 76vh;padding: 20px;overflow-y: scroll;">
+
+            <div id="quizeblock"  style="width: 70%;margin: auto;display: none;">
+                    <p style="text-align: center;font-weight: bold;" id="username"></p>
+                    <h5><span id="quenumber">1.</span><span id="question">Which Team win the First IPL title?</span></h5>
+                    <div class="row">
+                         <div class="col-6">
+                                <a id="option1" onclick="attempt_que(0)">1)Option 1</a>
+                         </div>
+                         <div class="col-6">
+                             <a id="option2" onclick="attempt_que(1)">2)Option 2</a>
+
+                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <a id="option3" onclick="attempt_que(2)">3)Option 3</a>
+                        </div>
+                        <div class="col-6">
+                            <a id="option4" onclick="attempt_que(3)">4)Option 4</a>
+
+                        </div>
+                   </div>
+                   <div class="row" style="margin-top: 10px;">
+                        <div class="col-2">
+                            <button  onclick="prev()">Prev</button>
+                        </div>
+                        <div class="col-8">
+                            
+                        </div>
+                        <div class="col-2">
+                            <button onclick="next()">Next</button>
+
+                        </div>
+
+                   </div>
+
+                   <div><button onclick="generatescore()">Submit Quiz</button></div>
+            </div>
+            <div  id="welcomeblock" style="width: 70%;margin: auto;text-align: center;display: block;">
+                  <h5>Welcome to the Quiz show.<br><small>Lets take a challenge</small></h5>
+                  <p>Enter your name and start</p>
+                  <input name="name" placeholder="enter your name" id="name"> 
+                  <button onclick="start()">Start Quiz</button>
+                  
+
+                  <div style="width: 20px;height: 20;border-radius: 50%;background-color: red;left:0%;margin-top: 20px;position: fixed;" id="circleid"></div>
+
+            </div>
+            <div style="width: 70%;margin: auto;display: none;" id="endquizblock">
+                 <h4>Thank You <span id="tname"></span> , Your Quize session completed. Have a nice day.</h4>
+                 <h6>Your got <span id="scoreid"></span> Score..</h6>
+                 <table class="table" id="dashtable">
+                    <tr><th>Question</th><th>Attempted Ans</th><th>Correct Ans</th></tr>
+                 </table>
+
+
+            </div>
+        
+
+        </div>
+        <div style="background-color: rgb(104, 76, 48);height: 12vh;">
+            <p style="text-align: center;font-size: 16px;color: #fff;" id="timer">-</p>
+        </div>
+
+    </body>
+
+    <script>
+        var questionlist = [
+  {
+    "que": "Which team won the first-ever IPL tournament in 2008?",
+    "options": ["Mumbai Indians", "Chennai Super Kings", "Rajasthan Royals", "Kolkata Knight Riders"],
+    "ansindex": 2
+  },
+  {
+    "que": "Who holds the record for the most runs in IPL history?",
+    "options": ["Virat Kohli", "Suresh Raina", "David Warner", "Rohit Sharma"],
+    "ansindex": 0
+  },
+  {
+    "que": "Which bowler has taken the most wickets in IPL history?",
+    "options": ["Lasith Malinga", "Amit Mishra", "Dwayne Bravo", "Yuzvendra Chahal"],
+    "ansindex": 3
+  },
+  {
+    "que": "Which team has won the most IPL titles as of 2024?",
+    "options": ["Mumbai Indians", "Chennai Super Kings", "Kolkata Knight Riders", "Royal Challengers Bangalore"],
+    "ansindex": 1
+  },
+  {
+    "que": "Who was the first Indian player to score an IPL century?",
+    "options": ["Virat Kohli", "Manish Pandey", "Sachin Tendulkar", "Gautam Gambhir"],
+    "ansindex": 1
+  },
+  {
+    "que": "Which stadium hosts the IPL final most frequently?",
+    "options": ["Wankhede Stadium", "Eden Gardens", "Narendra Modi Stadium", "M. Chinnaswamy Stadium"],
+    "ansindex": 2
+  },
+  {
+    "que": "Who won the IPL 2023 season?",
+    "options": ["Chennai Super Kings", "Gujarat Titans", "Mumbai Indians", "Rajasthan Royals"],
+    "ansindex": 0
+  },
+  {
+    "que": "Which team recorded the highest total in a single IPL match?",
+    "options": ["Royal Challengers Bangalore", "Kolkata Knight Riders", "Mumbai Indians", "Sunrisers Hyderabad"],
+    "ansindex": 0
+  },
+  {
+    "que": "Which player has won the most 'Man of the Match' awards in IPL history?",
+    "options": ["Virat Kohli", "Chris Gayle", "AB de Villiers", "MS Dhoni"],
+    "ansindex": 2
+  },
+  {
+    "que": "Which overseas player has scored the most runs in IPL history?",
+    "options": ["David Warner", "AB de Villiers", "Chris Gayle", "Jos Buttler"],
+    "ansindex": 0
+  }
+]
+        var userattempt= [];
+
+        questionlist.forEach(element => {
+            
+            var attempt = {
+                ansindex:-1,
+                timestamp:-1,
+            }
+            userattempt.push(attempt);
+        });
+        console.log(userattempt);
+
+        var currentQuesitonindex=0;
+        document.getElementById("quenumber").innerHTML = (currentQuesitonindex+1)+"."
+        console.log(questionlist);
+        loadquestions(0);
+
+
+        setInterval(move,500);
+        var circleid = document.getElementById("circleid");
+        console.log(circleid.style);
+        var leftv=0;
+        function move(){
+
+            leftv=leftv+2;
+            circleid.style.left=leftv+"%";
+            console.log(left);
+
+        }
+        function next(){
+            if(currentQuesitonindex<questionlist.length-1)
+            currentQuesitonindex++;
+            document.getElementById("quenumber").innerHTML = (currentQuesitonindex+1)+"."
+            loadquestions(currentQuesitonindex);
+        }
+        function prev(){
+            if(currentQuesitonindex>0)
+             currentQuesitonindex--;
+            document.getElementById("quenumber").innerHTML = (currentQuesitonindex+1)+"."
+            loadquestions(currentQuesitonindex);
+
+        }
+        var name;
+        var time=0;
+        function start(){
+           
+            name = document.getElementById("name").value;
+            if(name=="")
+             {
+                alert("please enter your name");
+             }else{
+                document.getElementById("quizeblock").style.display="block";
+                document.getElementById("welcomeblock").style.display="none";
+                document.getElementById("username").innerHTML="Welcome "+name+",have a nice quiz session ";
+                document.getElementById("username").style.color ="black"
+                setTimeout(endquiz,1000*60*3);
+                setInterval(displaytime,1000);
+
+
+             }
+
+        }
+        var timer = document.getElementById("timer");
+        function displaytime(){
+
+
+            time++;
+            timer.innerHTML=time;
+
+
+        }
+        function endquiz(){
+
+            time=0;
+            document.getElementById("quizeblock").style.display="none";
+            document.getElementById("welcomeblock").style.display="none";
+            document.getElementById("endquizblock").style.display="block";
+            document.getElementById("tname").innerHTML=name;
+            //updated score
+            document.getElementById("scoreid").innerHTML=score;
+
+            
+            // alert("end quiz");
+
+
+        }
+        function loadquestions(current_index){
+            console.log(questionlist[current_index])
+            var ques = document.getElementById("question");
+            var option1 = document.getElementById("option1");
+            var option2 = document.getElementById("option2");
+            var option3 = document.getElementById("option3");
+            var option4 = document.getElementById("option4");
+            ques.innerHTML = questionlist[current_index].que;
+            option1.innerHTML = questionlist[current_index].options[0];
+            option2.innerHTML = questionlist[current_index].options[1];
+            option3.innerHTML = questionlist[current_index].options[2];
+            option4.innerHTML = questionlist[current_index].options[3];
+
+            attement_index=userattempt[current_index].ansindex;
+            if(attement_index>-1)
+            {
+                if(attement_index==0)
+                {
+                    //active
+                    option1.style.backgroundColor="green";
+                    option1.style.color="white";
+
+                    //nonactive
+                    option2.style.backgroundColor="burlywood";
+                    option2.style.color="black";
+                    option3.style.backgroundColor="burlywood";
+                    option3.style.color="black";
+                    option4.style.backgroundColor="burlywood";
+                    option4.style.color="black";
+                    
+                }
+                else if (attement_index==1)
+                {
+                    // active
+
+                    option2.style.backgroundColor="green";
+                    option2.style.color="white";
+
+                    // non active
+                    option1.style.backgroundColor="burlywood";
+                    option1.style.color="black";
+                    option3.style.backgroundColor="burlywood";
+                    option3.style.color="black";
+                    option4.style.backgroundColor="burlywood";
+                    option4.style.color="black";
+                }
+                else if (attement_index==2)
+                {
+                    //active
+                    option3.style.backgroundColor="green";
+                    option3.style.color="white";
+
+                    //non active
+                    option1.style.backgroundColor="burlywood";
+                    option1.style.color="black";
+                    option2.style.backgroundColor="burlywood";
+                    option2.style.color="black";
+                    option4.style.backgroundColor="burlywood";
+                    option4.style.color="black";
+
+                }
+                else {
+
+                    //active
+                    option4.style.backgroundColor="green";
+                    option4.style.color="white";
+
+                    //non active
+                    option1.style.backgroundColor="burlywood";
+                    option1.style.color="black";
+                    option2.style.backgroundColor="burlywood";
+                    option2.style.color="black";
+                    option3.style.backgroundColor="burlywood";
+                    option3.style.color="black";
+                }
+
+            }
+            else{
+
+                option1.style.backgroundColor="burlywood";
+                option1.style.color="black";
+                option2.style.backgroundColor="burlywood";
+                option2.style.color="black";
+                option3.style.backgroundColor="burlywood";
+                option3.style.color="black";
+                option4.style.backgroundColor="burlywood";
+                option4.style.color="black";
+            }
+
+            
+
+
+        }
+        function attempt_que(option_index){
+            // console.log(currentQuesitonindex);
+            if(userattempt[currentQuesitonindex].ansindex>-1)
+            {
+                return;
+            }
+            userattempt[currentQuesitonindex].ansindex=option_index;
+            // console.log(userattempt);
+            next();
+        }
+
+    
+        var score=0;
+        function generatescore(){
+
+            var index=0;
+            questionlist.forEach(element => {
+                
+                if(element.ansindex==userattempt[index].ansindex)
+                {
+                    score++;   
+                }
+
+                index++;
+            });
+            endquiz();
+            generatedashboard();
+            console.log(score);
+        }
+
+        rows="";
+        function generatedashboard(){
+            var dashtable = document.getElementById("dashtable");
+            var index=0;
+            questionlist.forEach(element => {
+                
+                var que = element.que;
+                var cans = element.options[element.ansindex];
+
+                var aans="-"
+                if(userattempt[index].ansindex>0)
+                    {
+                       aans = element.options[userattempt[index].ansindex];
+                       
+                    }
+ 
+            
+                row="<tr><td>"+que+"</td><td>"+cans+"</td><td>"+aans+"</td></tr>";
+                dashtable.innerHTML = dashtable.innerHTML + row;
+                console.log(row);
+                index++;
+            });
+        }
+
+
+    </script>
+</html>

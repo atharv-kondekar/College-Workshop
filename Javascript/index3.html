@@ -1,0 +1,265 @@
+<html>
+    <head><title>Javascript Workshop</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+        <!-- <script>
+            
+            // variable declarions
+            var num1=5,num2=10;
+            let ans;
+            ans = num1+ num2;
+            alert("sum of "+num1+' and ' + num2+" is " +ans);
+            console.log(num1,num2,ans);
+
+            // If else
+            if(num1>num2)
+            {
+               console.log(num1 +"is greater than "+num2);   
+            }
+            else if(num1==num2)
+            {
+               console.log(num1 +"and "+num2+"are equal");   
+            }
+            else
+            {
+                console.log(num2 +"is greater than "+num1);   
+
+            }
+            //  arrays;
+            var array=["uday","Rahul","Akash"];
+            console.log(array);
+
+            for(var i=0;i<10;i++)
+            {
+                console.log(i);
+            }
+            while(num1>0)
+            {
+                console.log(num1);
+                num1--;
+            }
+
+
+
+        </script> -->
+       
+
+
+
+
+
+
+
+</head>
+    <body style="width: 90%;margin: auto;"> 
+        
+        <!-- <h1>Student List</h1>
+        <div> 
+            <input name="name" placeholder="enter name" id="name">
+            <input name="age"  placeholder="enter age" id="age">
+            <button  onclick="addstudent()">Add</button>
+        </div>
+        <table id="studentid" class="table">
+            <tr><th>Name</th><th>Age</th><th>Action</th></tr>
+        </table> -->
+
+
+        <div id="titlewindow">
+            <h6>Lets take challenge for your cricket knowledge</h6>
+            <button onclick="start()">Start Quize</button>
+        </div>
+        <div id="quizewindow">
+            <p id="Ques"></p>
+            <div id="options">
+
+            </div>
+            <button>Next</button>
+        </div>
+
+
+  
+    </body>
+    <script>
+
+        var array=[5,1,2,3];
+        array.sort();
+        console.log(array);
+        var student= {
+            name:"Uday",
+            age:32,
+            marks: {
+                math:82,
+                phys:75,
+                chem:68
+            },
+            branches : [
+                {name:"CSE",clg:"DKTE"},{name:"ENTC",clg:"SIT",cate:"OPEN"}
+            ]
+        }
+        
+        
+        
+        
+        console.log(student.name);
+        console.log(student.age);
+        console.log(student.branches);
+
+        for(var i=0;i<student.branches.length;i++)
+        {
+            console.log(student.branches[i],student.branches[i].name,student.branches[i].clg);
+
+        }
+
+        student.branches.forEach(element => {
+            console.log(element.name);
+        });
+
+        var studentlist=[]
+    
+        function addstudent(){
+
+            // read...list push...dom update;
+
+            var name= document.getElementById("name").value;
+            var age= document.getElementById("age").value;
+            var newstud= {
+                name:name,
+                age:age
+            }
+            console.log(newstud);
+            studentlist.push(newstud);
+            console.log(studentlist);
+            var tbl=document.getElementById("studentid");
+            var rows="<tr><th>Name</th><th>Age</th></tr>";
+            var i=0;
+
+            studentlist.forEach(rowobj=>{
+            var row="<tr><td>"+rowobj.name+"</td><td>"+rowobj.age+"</td>"+
+                "<td><a href='#' onclick='remove_student("+i+")'>Delete</a></td></tr>";
+                rows =rows +row;
+                console.log(row);
+
+                i++;
+            });
+            console.log(rows);
+            tbl.innerHTML=rows;
+
+
+        }
+        
+        function remove_student(index){
+            alert("removing student at"+index);
+            this.studentlist.splice(index,1);
+
+            // update dom
+            var tbl=document.getElementById("studentid");
+            var rows="<tr><th>Name</th><th>Age</th></tr>";
+            var i=0;
+
+            studentlist.forEach(rowobj=>{
+            var row="<tr><td>"+rowobj.name+"</td><td>"+rowobj.age+"</td>"+
+                "<td><a href='#' onclick='remove_student("+i+")'>Delete</a></td></tr>";
+                rows =rows +row;
+                console.log(row);
+
+                i++;
+            });
+            tbl.innerHTML=rows;
+
+        }
+        function addstudent_byupdate(){
+
+            // read...list push...dom update;
+
+            var name= document.getElementById("name").value;
+            var age= document.getElementById("age").value;
+            var newstud= {
+                name:name,
+                age:age
+            }
+            console.log(newstud);
+            studentlist.push(newstud);
+            console.log(studentlist);
+            var tbl=document.getElementById("studentid");
+            
+            var row ="<tr><td>"+name+"</td><td>"+age+"</td></tr>";
+            tbl.innerHTML = tbl.innerHTML + row;
+
+
+            }
+
+
+
+
+
+
+
+                
+// onchange
+// onclick
+// onmouseover
+// onmouseout
+// onkeydown
+// onload
+
+    </script>
+
+    <script>
+        var quizlist=[];
+
+        var question= {
+            que:"First indian caption to win worldcup?",
+            options :["MS Dhoni","Kapil Dev","Rohit Sharma","Saurabh Ganguli"],
+            ansindex:1
+        }
+        quizlist.push(question);
+        question= {
+            que:"Team name having Max IPL Trophies?",
+            options :["KKR","MI","CSK","Both 2 and 3"],
+            ansindex:3
+        }
+        quizlist.push(question);
+
+        question= {
+            que:"Most runs by any cricketer in ODI?",
+            options :["Sachin T","Virat","MS Dhoni","Rohit Sharma"],
+            ansindex:0
+        }
+        quizlist.push(question);
+
+        console.log(quizlist);
+        var activeque=0;
+        function start(){
+
+            var ques=document.getElementById("Ques");
+            ques.innerHTML = quizlist[activeque].que;
+            var options=document.getElementById("options");
+
+            rows="";
+            var opindex=0;
+            quizlist[activeque].options.forEach(element => {
+                
+                var row="<a onclick='selectans("+opindex+")'>"+element+"</a><br>"
+                rows=rows+row;
+                opindex++;
+            });
+            options.innerHTML=rows;
+        }
+
+        function selectans(index){
+            if(quizlist[activeque].ansindex==index)
+            {
+                alert("Correct ans");
+        
+            }
+            else{
+                alert("InCorrect ans");
+
+            }
+
+        }
+
+    </script>
+</html>
+
+
